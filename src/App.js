@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from 'react-router-dom';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { MainPage } from './components/MainPage';
+import { GoodsPage } from './components/GoodsPage';
+import { GoodPageFull } from './components/GoodPageFull';
+import { Login } from './components/Auth/Login';
+import { SignUp } from './components/Auth/SignUp';
+import './style.css';
 
 function App() {
+  const authTableState = useSelector((state) => state.AuthWindowStateReducer.isVisible);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Routes>
+        <Route path='/' element={<MainPage />} />
+        <Route path='goods' element={<GoodsPage />} />
+        <Route path='good' element={<GoodPageFull />} />
+        <Route path='login' element={<Login />} />
+        <Route path='signup' element={<SignUp />} />
+      </Routes>
     </div>
   );
 }

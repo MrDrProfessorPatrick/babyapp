@@ -1,0 +1,65 @@
+.login {
+  position: absolute;
+  opacity: 1;
+  z-index: 1000;
+  height: auto;
+  width: auto;
+  margin-left: 40%;
+  margin-top: 100px;
+  border: none;
+}
+
+.login .cardbody {
+  min-width: 400px;
+  background-color: #d6e0d6;
+}
+
+.login .switchButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #d6e0d6;
+  width: 500px;
+}
+
+.login .switchButtons .switchLoginOn {
+  width: 30%;
+  background-color: azure;
+  height: 40px;
+  border-radius: 1px;
+  border: none;
+  font-weight: bold;
+  border-top: 3px solid #e40a86;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.login .switchButtons .switchLoginOff {
+  width: 30%;
+  background-color: azure;
+  height: 40px;
+  border-radius: 1px;
+  border: none;
+  font-weight: bold;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.login .switchButtons .switchSingUp {
+  width: 30%;
+  border-radius: 1px;
+  border: none;
+  font-weight: bold;
+}
+
+.loginTabBackground {
+  position: absolute;
+  background-color: black;
+  z-index: 1;
+  opacity: 0.8;
+  height: 100vh;
+  width: 100%;
+  max-width: auto;
+  max-height: auto;
+}
+/*# sourceMappingURL=Auth.module.css.map */
