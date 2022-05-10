@@ -6,6 +6,7 @@ import { GoodsPage } from './components/GoodsPage';
 import { GoodPageFull } from './components/GoodPageFull';
 import { Login } from './components/Auth/Login';
 import { SignUp } from './components/Auth/SignUp';
+import { UserPage } from './components/UserPage/UserPage';
 import './style.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path='good' element={<GoodPageFull />} />
         <Route path='login' element={<Login />} />
         <Route path='signup' element={<SignUp />} />
+        <Route path='userpage' element={<UserPage />} />
       </Routes>
     </div>
   );

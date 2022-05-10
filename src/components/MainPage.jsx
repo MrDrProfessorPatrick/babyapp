@@ -4,7 +4,7 @@ import { MainPageImage } from './ImageMainPage';
 import { DropDownPanel } from './DropDownPanel';
 import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 import { useSelector, useDispatch } from 'react-redux';
-import { Login } from './Auth/Login';
+import { Auth } from './Auth/Auth';
 
 export let dropDownShown = false;
 
@@ -14,7 +14,7 @@ export function MainPage() {
   const authTableState = useSelector((state) => state.AuthWindowStateReducer.isVisible);
   return (
     <>
-      {authTableState && <Login />}
+      {authTableState && <Auth />}
       <NavbarPanel />
       <MainPageImage />
     </>
