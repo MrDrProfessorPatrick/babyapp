@@ -4,15 +4,21 @@ import { Card, Form, Button, Alert } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginRequest } from '../../services/loginRequest';
 import { showAuthFormAC } from '../../store/AuthWindow/AuthWindowAC';
-import { isAdminChangeStateAC, SetNameAC, SetEmailAC, SetPhoneAC } from '../../store/User/UserAC';
+import {
+  isAdminChangeStateAC,
+  SetNameAC,
+  SetEmailAC,
+  SetPhoneAC,
+  login,
+} from '../../store/User/UserAC';
 import classes from './Auth.module.scss';
 
 export function Login() {
+  const dispatch = useDispatch();
   const history = useNavigate();
   let isAdminState = useSelector((state) => state.UserReducer.isAdmin);
   let emailRef = useRef();
   let passwordRef = useRef();
-  let url = 'http://localhost:5000/auth/login';
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -28,8 +34,8 @@ export function Login() {
     try {
       setError('');
       setLoading(true);
-      loginRequest(url, user);
-      history('/userpage');
+      dispatch(login(user));
+      // history('/userpage');
     } catch {
       setError('Account or password is not correct');
     }

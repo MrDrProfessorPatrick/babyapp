@@ -1,25 +1,26 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+const axios = require('axios');
 // import { isAdminChangeStateAC } from '../../store/User/UserAC';
 
-export async function loginRequest(url, user) {
-  await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify(user),
-  })
+export async function loginRequest([url, user, password]) {
+  console.log('user inside loginRequest ', { username: user, password }, url);
+  return await axios
+    .post(url, {
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: { username: user, password },
+    })
     .then((token) => {
-      if (!token.ok) {
-        throw new Error('You are not authorized, try to log in');
+      console.log('token', token.data);
+      if (token.statusText !== 'OK') {
+        throw new Error('You are not authorized, try again');
       }
-      return token.json();
+      document.cookie = `refreshToken = ${token.data.refreshToken} httpOnly`;
+      localStorage.setItem('loginToken', token.data.token);
+      localStorage.setItem('username', user);
+      return token.data;
     })
-    .then((data) => {
-      localStorage.setItem('loginToken', data.token);
-      localStorage.setItem('username', user.username);
-      //   dispatch(isAdminChangeStateAC(true));
-    })
-    .catch((error) => console.log(error));
+    .catch((error) => console.log('Catched error in loginRequest', error));
 }

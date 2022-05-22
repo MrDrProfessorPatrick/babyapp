@@ -31,9 +31,7 @@ export function SignUp() {
       setError('');
       setLoading(true);
       dispatch(isSignedUpStateChange({ url, user }));
-      // signUpRequest(url, user);
-
-      // history('/auth/registration');
+      history('/userpage');
     } catch (error) {
       console.log('error', error);
       console.log(passwordRef.current.value, 'password');

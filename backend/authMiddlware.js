@@ -12,10 +12,10 @@ module.exports = function (req, res, next) {
     }
     const decodedData = jwt.verify(token, secret);
     console.log('decodedData', decodedData);
-    req.user = decodedData;
+    req.user = decodedData; // adds user property to request
     next();
   } catch (error) {
-    console.log(error);
+    console.log('error inside authMiddlware', error);
     return res.status(403).json({ message: 'User is not authorized' });
   }
 };

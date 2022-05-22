@@ -4,10 +4,11 @@ const { json } = require('express');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const { secret } = require('./config');
+const { refreshTokenSecret } = require('./config');
 const bcrypt = require('bcryptjs');
 const emailSender = require('./utils/emailSender');
 
-const genereteAcessToken = (id, roles) => {
+const genereteAcessToken = (id, roles, secret) => {
   const payload = { id, roles };
   return jwt.sign(payload, secret, { expiresIn: '24h' });
 };
@@ -43,7 +44,8 @@ class authController {
 
   async login(req, res) {
     try {
-      const { username, password } = req.body;
+      console.log('req.body', req.body.body);
+      const { username, password } = req.body.body;
       const user = await User.findOne({ username });
 
       if (!user) {
@@ -53,9 +55,10 @@ class authController {
       if (!validPassword) {
         return res.status(400).json({ message: 'Неверный пароль' });
       }
-      const token = genereteAcessToken(user._id, user.roles);
-
-      return res.json({ token });
+      const token = genereteAcessToken(user._id, user.roles, secret);
+      const refreshToken = genereteAcessToken(user._id, user.roles, refreshTokenSecret);
+      // console.log('Tokens in login', res.json({ token, refreshToken }));
+      return res.json({ token, refreshToken });
     } catch (error) {
       console.log(error);
       res.status(400).json('Login error');
@@ -64,6 +67,7 @@ class authController {
 
   async getUsers(req, res) {
     try {
+      console.log('req inside getUsers', req);
       const users = await User.find();
       console.log('GET USERS WORKS');
       res.json({ users });
@@ -80,7 +84,7 @@ class authController {
       const user = await User.findOne({ username: req.body.username });
       console.log(user, 'user in getCurrentUser');
     } catch (error) {
-      console.log(error);
+      console.log('error inside getCurrentUser', error);
     }
   }
 }

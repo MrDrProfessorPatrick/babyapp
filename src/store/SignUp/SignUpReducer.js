@@ -9,7 +9,7 @@ export const SignUpReducer = (state = initialState, action) => {
     case SIGN_UP_STATE:
       return {
         ...state,
-        isSigned: true,
+        isEmailConfirmationSent: false,
       };
     default:
       return state;

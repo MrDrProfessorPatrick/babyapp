@@ -1,15 +1,20 @@
 import {
   CHANGE_ISVERIFIED_STATE,
   CHANGE_ISADMIN_STATE,
+  LOGIN,
+  SET_ISLOGGED,
   SET_NAME,
   SET_EMAIL,
   SET_PHONE,
+  ADD_ACCESS_TOKEN,
 } from './UserAT';
 
 const initialState = {
   name: '',
   email: '',
   phone: null,
+  acessToken: '',
+  isLogged: false,
   isVerified: false,
   isAdmin: false,
 };
@@ -30,6 +35,21 @@ export const UserReducer = (state = initialState, action) => {
       return {
         ...state,
         name: action.payload,
+      };
+    case LOGIN:
+      return {
+        ...state,
+        login: true,
+      };
+    case ADD_ACCESS_TOKEN:
+      return {
+        ...state,
+        acessToken: action.payload,
+      };
+    case SET_ISLOGGED:
+      return {
+        ...state,
+        isLogged: action.payload,
       };
     case CHANGE_ISVERIFIED_STATE:
       return {
