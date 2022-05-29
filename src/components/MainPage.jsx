@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavbarPanel } from './NavbarPanel';
 import { MainPageImage } from './ImageMainPage';
 import { DropDownPanel } from './DropDownPanel';
 import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 import { useSelector, useDispatch } from 'react-redux';
+import { fetchAccessToken } from '../services/fetchAccessToken';
+import { fetchUserDetails } from '../services/fetchUserDetails';
 import { Auth } from './Auth/Auth';
 
 export let dropDownShown = false;

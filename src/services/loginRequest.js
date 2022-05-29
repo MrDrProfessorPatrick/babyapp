@@ -6,21 +6,16 @@ const axios = require('axios');
 export async function loginRequest([url, user, password]) {
   console.log('user inside loginRequest ', { username: user, password }, url);
   return await axios
-    .post(url, {
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-      body: { username: user, password },
-    })
+    .post(url, { username: user, password })
     .then((token) => {
-      console.log('token', token.data);
+      console.log('token', token);
       if (token.statusText !== 'OK') {
         throw new Error('You are not authorized, try again');
       }
       document.cookie = `refreshToken = ${token.data.refreshToken} httpOnly`;
-      localStorage.setItem('loginToken', token.data.token);
       localStorage.setItem('username', user);
+      localStorage.setItem('userId', token.data.userId);
       return token.data;
     })
-    .catch((error) => console.log('Catched error in loginRequest', error));
+    .catch((error) => console.log('Catched error in loginRequest', error.response));
 }

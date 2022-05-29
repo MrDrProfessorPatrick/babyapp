@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+var cookieParser = require('cookie-parser');
 const dotenv = require('dotenv').config();
 const authRouter = require('./authRouter');
 const PORT = 5000;
@@ -8,10 +9,12 @@ const PORT = 5000;
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser(), authRouter);
 app.use(
   '/auth',
   cors({
-    origin: 'http://localhost:5002',
+    origin: true,
+    credentials: true,
   }),
   authRouter
 );

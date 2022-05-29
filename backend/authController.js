@@ -1,10 +1,10 @@
 const User = require('./models/User');
 const Role = require('./models/Role');
+const AccessToken = require('./models/AccessToken');
 const { json } = require('express');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const { secret } = require('./config');
-const { refreshTokenSecret } = require('./config');
+const { secret, refreshTokenSecret } = require('./config');
 const bcrypt = require('bcryptjs');
 const emailSender = require('./utils/emailSender');
 
@@ -38,16 +38,17 @@ class authController {
       await user.save();
       return res.json('User was successfully registered');
     } catch (error) {
-      res.status(400).json('Registration error me own');
+      res.status(400).json('Registration error my own');
     }
   }
 
   async login(req, res) {
     try {
-      console.log('req.body', req.body.body);
-      const { username, password } = req.body.body;
+      console.log('req.body', req.body);
+      const { username, password } = req.body;
       const user = await User.findOne({ username });
-
+      const userId = user.id;
+      console.log(user, 'user inside login authController');
       if (!user) {
         return res.status(400).json({ message: `Пользователь ${username} не найден` });
       }
@@ -55,15 +56,29 @@ class authController {
       if (!validPassword) {
         return res.status(400).json({ message: 'Неверный пароль' });
       }
-      const token = genereteAcessToken(user._id, user.roles, secret);
+      const accessToken = genereteAcessToken(user._id, user.roles, secret);
       const refreshToken = genereteAcessToken(user._id, user.roles, refreshTokenSecret);
+      const AccessTokenById = new AccessToken({ userId, accessToken, refreshToken });
+      AccessTokenById.save();
       // console.log('Tokens in login', res.json({ token, refreshToken }));
-      return res.json({ token, refreshToken });
+      return res.status(200).json({ userId, accessToken, refreshToken });
     } catch (error) {
       console.log(error);
       res.status(400).json('Login error');
     }
   }
+
+  async getAccessToken(req, res) {
+    console.log('request Cookies', req.cookies);
+    console.log('getAccessToken req and DOCUMENT COOKIE');
+  }
+
+  // {    res.set();
+  //   'Access-Control-Allow-Credentials': 'true',
+  //   'Access-Control-Allow-Origin': 'http://localhost:5002',
+  //   'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+  //   'Access-Control-Allow-Headers': 'X-PINGOTHER, Content-Type',
+  // }
 
   async getUsers(req, res) {
     try {
@@ -90,3 +105,8 @@ class authController {
 }
 
 module.exports = new authController();
+
+// add access and Refresh tokens to DB and on front on login => add refreshToken into cookies and accessToken store
+// on dataRequest check accessToken and compare with DB token
+// if accessToken good => give access
+// if accessToken bad => renew it by refreshToken

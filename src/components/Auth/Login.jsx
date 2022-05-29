@@ -35,7 +35,7 @@ export function Login() {
       setError('');
       setLoading(true);
       dispatch(login(user));
-      // history('/userpage');
+      history('/userpage');
     } catch {
       setError('Account or password is not correct');
     }

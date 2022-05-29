@@ -12,8 +12,9 @@ export function* loginWorker(payload) {
       payload.payload.username,
       payload.payload.password,
     ]);
+    yield console.log('token.accessToken', token);
     yield console.log('token in loginWorker', token);
-    yield put(addAccessToken(token.refreshToken));
+    yield put(addAccessToken(token.accessToken));
     // yield call(isAdminChangeStateAC(payload.isAdmin));
   } catch (error) {
     console.log('error in loginWorker', error);
