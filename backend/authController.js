@@ -8,7 +8,7 @@ const { secret, refreshTokenSecret } = require('./config');
 const bcrypt = require('bcryptjs');
 const emailSender = require('./utils/emailSender');
 
-const genereteAcessToken = (id, roles, secret) => {
+const genereteToken = (id, roles, secret) => {
   const payload = { id, roles };
   return jwt.sign(payload, secret, { expiresIn: '24h' });
 };
@@ -56,8 +56,8 @@ class authController {
       if (!validPassword) {
         return res.status(400).json({ message: 'Неверный пароль' });
       }
-      const accessToken = genereteAcessToken(user._id, user.roles, secret);
-      const refreshToken = genereteAcessToken(user._id, user.roles, refreshTokenSecret);
+      const accessToken = genereteToken(user._id, user.roles, secret);
+      const refreshToken = genereteToken(user._id, user.roles, refreshTokenSecret);
       const AccessTokenById = new AccessToken({ userId, accessToken, refreshToken });
       AccessTokenById.save();
       // console.log('Tokens in login', res.json({ token, refreshToken }));
@@ -69,8 +69,27 @@ class authController {
   }
 
   async getAccessToken(req, res) {
-    console.log('request Cookies', req.cookies);
+    const refreshToken = req.cookies.refreshToken.split(' ')[0];
+    let accessToken;
+    console.log(refreshToken, 'refreshToken');
+    if (!refreshToken) {
+      return res.status(403).json({ error: true, message: 'You need to login' });
+    }
+
+    jwt.verify(refreshToken, refreshTokenSecret, function (err, decoded) {
+      if (err) {
+        console.log(err, 'err');
+        return res.status(403).json({ error: true, message: 'You need to login token is invalid' });
+      }
+      console.log('decoded inside getAccessToken', decoded);
+
+      accessToken = genereteToken(decoded.id, decoded.roles, secret);
+      res.accessToken = accessToken;
+    });
+    console.log('request Cookies', req.cookies.refreshToken);
     console.log('getAccessToken req and DOCUMENT COOKIE');
+
+    return res.status(200).json(accessToken);
   }
 
   // {    res.set();
@@ -84,7 +103,7 @@ class authController {
     try {
       console.log('req inside getUsers', req);
       const users = await User.find();
-      console.log('GET USERS WORKS');
+      console.log('decoded User Data', req.decodedUserData);
       res.json({ users });
     } catch (error) {
       console.log(error);
@@ -93,11 +112,9 @@ class authController {
 
   async getCurrentUser(req, res) {
     try {
-      console.log('req.body.username', req.body.token);
-      console.log('DECODED', jwt.decode(req.body.token));
-      // console.log('req.headers.Authorization', req.headers);
-      const user = await User.findOne({ username: req.body.username });
-      console.log(user, 'user in getCurrentUser');
+      await console.log('req.decodedUserData', req.decodedUserData.id);
+      const user = await User.findById(req.decodedUserData.id);
+      await console.log(user, 'user in getCurrentUser');
     } catch (error) {
       console.log('error inside getCurrentUser', error);
     }

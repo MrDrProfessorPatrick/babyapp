@@ -20,12 +20,7 @@ router.post(
 );
 router.post('/login', controller.login);
 router.get('/users', authMiddleware, roleMiddleware(['ADMIN']), controller.getUsers);
-router.post(
-  '/currentuser',
-  tokenCheckerMiddlware,
-  roleMiddleware(['ADMIN']),
-  controller.getCurrentUser
-);
+router.post('/currentuser', authMiddleware, roleMiddleware(['ADMIN']), controller.getCurrentUser);
 router.post('/getaccesstoken', controller.getAccessToken);
 
 module.exports = router;

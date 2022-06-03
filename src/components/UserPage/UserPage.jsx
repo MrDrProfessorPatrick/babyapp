@@ -16,7 +16,6 @@ export function UserPage() {
 
   return (
     <>
-      <NavbarPanel />
       <div className={classes.contactDetails}>
         <p>Ваше имя: {username} </p>
         <p>Email </p>

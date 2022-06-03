@@ -11,6 +11,7 @@ export async function fetchUserDetails(token) {
   })
     .then((user) => {
       console.log(user.json());
+      return user;
     })
     .catch((error) => {
       console.log(error);

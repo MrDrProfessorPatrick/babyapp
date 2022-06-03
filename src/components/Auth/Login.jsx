@@ -10,6 +10,7 @@ import {
   SetEmailAC,
   SetPhoneAC,
   login,
+  setIsLogged,
 } from '../../store/User/UserAC';
 import classes from './Auth.module.scss';
 
@@ -35,6 +36,8 @@ export function Login() {
       setError('');
       setLoading(true);
       dispatch(login(user));
+      dispatch(setIsLogged(true));
+      dispatch(SetNameAC(user.username));
       history('/userpage');
     } catch {
       setError('Account or password is not correct');

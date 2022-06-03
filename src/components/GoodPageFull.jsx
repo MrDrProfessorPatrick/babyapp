@@ -27,7 +27,6 @@ export function GoodPageFull() {
 
   return (
     <>
-      <NavbarPanel />
       <div className='containerGoodPageFull'>
         <div className='photosWithDescription'>
           <div className='imagesSection'>

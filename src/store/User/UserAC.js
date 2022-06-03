@@ -2,6 +2,7 @@ import {
   CHANGE_ISVERIFIED_STATE,
   CHANGE_ISADMIN_STATE,
   LOGIN,
+  GET_USER_DETAILS_REQUEST,
   SET_ISLOGGED,
   SET_NAME,
   SET_EMAIL,
@@ -46,5 +47,10 @@ export const SetEmailAC = (payload) => ({
 
 export const SetPhoneAC = (payload) => ({
   type: SET_PHONE,
+  payload,
+});
+
+export const GetUserDetailsRequest = (payload) => ({
+  type: GET_USER_DETAILS_REQUEST,
   payload,
 });

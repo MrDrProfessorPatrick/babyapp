@@ -2,6 +2,7 @@ import {
   CHANGE_ISVERIFIED_STATE,
   CHANGE_ISADMIN_STATE,
   LOGIN,
+  GET_USER_DETAILS_REQUEST,
   SET_ISLOGGED,
   SET_NAME,
   SET_EMAIL,
@@ -40,6 +41,10 @@ export const UserReducer = (state = initialState, action) => {
       return {
         ...state,
         login: true,
+      };
+    case GET_USER_DETAILS_REQUEST:
+      return {
+        ...state,
       };
     case ADD_ACCESS_TOKEN:
       return {

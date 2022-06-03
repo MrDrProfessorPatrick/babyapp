@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Navbar, Nav, Container, Col, Row, Button, Dropdown } from 'react-bootstrap';
+import { Navbar, Nav, Container, Col, Row, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { BsCart3, BsPerson, BsSearch } from 'react-icons/bs';
 import { useSelector, useDispatch } from 'react-redux';
 import { showAuthFormAC } from '../store/AuthWindow/AuthWindowAC';
@@ -9,6 +10,7 @@ import logo from '../assets/logo2.svg';
 export function NavbarPanel() {
   const [isHoverCatalog, setIsHoverCatalog] = useState(false);
   const authTableState = useSelector((state) => state.AuthWindowStateReducer.isVisible);
+  const { acessToken, name } = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
 
   console.log('authTableState', authTableState);
@@ -36,7 +38,7 @@ export function NavbarPanel() {
 
       <Navbar className='navbar'>
         <Navbar.Brand href='#home' className='navbarBrand'>
-          <Nav.Link href='/'>
+          <Nav.Link as={Link} to='/'>
             <img alt='' src={logo} width='50' height='50' className='d-inline-block align-top' />
             S&V
           </Nav.Link>
@@ -50,16 +52,33 @@ export function NavbarPanel() {
           Каталог
         </Button>
         <Nav className='navigationLinks'>
-          <Nav.Link href='https://www.instagram.com/svetlara_knits/'>Instagram</Nav.Link>
-          <Nav.Link href='#'>Facebook</Nav.Link>
-          <Nav.Link href='#pricing'>Pricing</Nav.Link>
-          <Nav.Link href='#pricing'>Goods</Nav.Link>
-          <Nav.Link href='#pricing'>Контакты</Nav.Link>
+          <Nav.Link as={Link} to='https://www.instagram.com/svetlara_knits/'>
+            Instagram
+          </Nav.Link>
+          <Nav.Link as={Link} to='#'>
+            Facebook
+          </Nav.Link>
+          <Nav.Link as={Link} to='#pricing'>
+            Pricing
+          </Nav.Link>
+          <Nav.Link as={Link} to='#pricing'>
+            Goods
+          </Nav.Link>
+          <Nav.Link as={Link} to='#pricing'>
+            Контакты
+          </Nav.Link>
         </Nav>
         <Nav className='iconsSection'>
-          <Nav.Link onClick={showAuthTable}>
-            <BsPerson />
-          </Nav.Link>
+          {acessToken ? (
+            <Nav.Link as={Link} to='/userpage'>
+              <span>{name || 'No user'}</span>
+            </Nav.Link>
+          ) : (
+            <Nav.Link onClick={showAuthTable}>
+              <BsPerson />
+            </Nav.Link>
+          )}
+
           <Nav.Link>
             <BsSearch />
           </Nav.Link>

@@ -7,7 +7,6 @@ import { GoodsPageMenu } from './GoodsPageMenu';
 export function GoodsPage() {
   return (
     <>
-      <NavbarPanel />
       <GoodsPageMenu />
       <div className='goodsPage'>
         <Cards arr={goods} />
