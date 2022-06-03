@@ -30,12 +30,12 @@ export const UserReducer = (state = initialState, action) => {
     case SET_EMAIL:
       return {
         ...state,
-        name: action.payload,
+        email: action.payload,
       };
     case SET_PHONE:
       return {
         ...state,
-        name: action.payload,
+        phone: action.payload,
       };
     case LOGIN:
       return {

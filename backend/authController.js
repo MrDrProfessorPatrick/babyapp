@@ -115,6 +115,7 @@ class authController {
       await console.log('req.decodedUserData', req.decodedUserData.id);
       const user = await User.findById(req.decodedUserData.id);
       await console.log(user, 'user in getCurrentUser');
+      return res.status(200).json(user);
     } catch (error) {
       console.log('error inside getCurrentUser', error);
     }

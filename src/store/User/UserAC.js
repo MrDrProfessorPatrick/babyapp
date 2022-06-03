@@ -35,19 +35,19 @@ export const setIsLogged = (isLogged) => ({
   payload: isLogged,
 });
 
-export const SetNameAC = (payload) => ({
+export const SetNameAC = (name) => ({
   type: SET_NAME,
-  payload,
+  payload: name,
 });
 
-export const SetEmailAC = (payload) => ({
+export const SetEmailAC = (email) => ({
   type: SET_EMAIL,
-  payload,
+  payload: email,
 });
 
-export const SetPhoneAC = (payload) => ({
+export const SetPhoneAC = (phone) => ({
   type: SET_PHONE,
-  payload,
+  payload: phone,
 });
 
 export const GetUserDetailsRequest = (payload) => ({

@@ -1,7 +1,7 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
 import { LOGIN_URL } from '../../constants/Links';
 import { GET_USER_DETAILS_REQUEST, LOGIN } from './UserAT';
-import { addAccessToken, SetNameAC } from './UserAC';
+import { addAccessToken, SetNameAC, SetEmailAC, SetPhoneAC } from './UserAC';
 import { loginRequest } from '../../services/loginRequest';
 import { fetchUserDetails } from '../../services/fetchUserDetails';
 
@@ -24,8 +24,11 @@ export function* loginWorker(payload) {
 }
 
 export function* getUserDetailsWorker(payload) {
-  yield console.log(payload, 'payload in getUserDetailsWorker');
-  const userDetails = yield call(fetchUserDetails, payload.payload);
+  yield console.log(payload.payload, 'payload in getUserDetailsWorker');
+  const userDetails = yield call(fetchUserDetails, [payload.payload]);
+  yield put(SetNameAC(userDetails.username));
+  userDetails.email ? yield put(SetEmailAC(userDetails.email)) : yield put(SetEmailAC('No email'));
+  userDetails.phone ? yield put(SetPhoneAC(userDetails.phone)) : yield put(SetPhoneAC('No phone'));
   yield console.log('userDetails', userDetails);
 }
 
