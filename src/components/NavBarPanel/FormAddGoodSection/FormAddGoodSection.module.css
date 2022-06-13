@@ -1,0 +1,12 @@
+.AddGoodSection {
+  position: absolute;
+  background-color: white;
+  width: 400px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  border: 1px solid black;
+}
+/*# sourceMappingURL=FormAddGoodSection.module.css.map */

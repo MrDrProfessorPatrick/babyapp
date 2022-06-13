@@ -1,9 +1,10 @@
 import {
   CHANGE_ISVERIFIED_STATE,
-  CHANGE_ISADMIN_STATE,
+  CHANGE_ROLE_STATE,
   LOGIN,
   GET_USER_DETAILS_REQUEST,
   SET_ISLOGGED,
+  SET_ID,
   SET_NAME,
   SET_EMAIL,
   SET_PHONE,
@@ -15,8 +16,8 @@ export const isVerifiedChangeStateAC = (payload) => ({
   payload,
 });
 
-export const isAdminChangeStateAC = (payload) => ({
-  type: CHANGE_ISADMIN_STATE,
+export const setRoleStateAC = (payload) => ({
+  type: CHANGE_ROLE_STATE,
   payload,
 });
 
@@ -33,6 +34,11 @@ export const addAccessToken = (payload) => ({
 export const setIsLogged = (isLogged) => ({
   type: SET_ISLOGGED,
   payload: isLogged,
+});
+
+export const SetUserIdAC = (userId) => ({
+  type: SET_ID,
+  payload: userId,
 });
 
 export const SetNameAC = (name) => ({

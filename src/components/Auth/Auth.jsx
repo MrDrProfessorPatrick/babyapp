@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { showAuthFormAC } from '../../store/AuthWindow/AuthWindowAC';
+
 import classes from './Auth.module.scss';
 import { Login } from './Login';
 import { SignUp } from './SignUp';
 
-export function Auth() {
-  const dispatch = useDispatch();
+export function Auth({ setAuthTableState }) {
   const [switchLoginSingUp, setSwitchLoginSingUp] = useState(true);
 
   let switchLoginButtonOn = classes.switchLoginOn;
   let switchLoginButtonOff = classes.switchLoginOff;
-
-  function handleCloseLoginTab() {
-    dispatch(showAuthFormAC(false));
-  }
 
   function loginButtonSwitcher() {
     setSwitchLoginSingUp(!switchLoginSingUp);
@@ -22,7 +17,7 @@ export function Auth() {
 
   return (
     <>
-      <div className={classes.loginTabBackground} onClick={handleCloseLoginTab}></div>
+      <div className={classes.loginTabBackground} onClick={setAuthTableState}></div>
       <div className={classes.login}>
         <div className={classes.switchButtons}>
           <button

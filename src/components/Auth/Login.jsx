@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Card, Form, Button, Alert } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginRequest } from '../../services/loginRequest';
-import { showAuthFormAC } from '../../store/AuthWindow/AuthWindowAC';
+
 import {
   isAdminChangeStateAC,
   SetNameAC,
@@ -17,7 +17,6 @@ import classes from './Auth.module.scss';
 export function Login() {
   const dispatch = useDispatch();
   const history = useNavigate();
-  let isAdminState = useSelector((state) => state.UserReducer.isAdmin);
   let emailRef = useRef();
   let passwordRef = useRef();
 
@@ -33,6 +32,7 @@ export function Login() {
     };
 
     try {
+      console.log('handleSubmin in Login and user', user);
       setError('');
       setLoading(true);
       dispatch(login(user));

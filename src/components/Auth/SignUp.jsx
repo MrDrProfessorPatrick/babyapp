@@ -15,6 +15,7 @@ export function SignUp() {
   let userNameRef = useRef();
   let passwordRef = useRef();
   let url = 'http://localhost:5000/auth/registration';
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useNavigate();

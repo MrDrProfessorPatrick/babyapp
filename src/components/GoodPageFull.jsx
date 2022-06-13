@@ -5,8 +5,9 @@ import secondImg from '../assets/pixels_baby.jpg';
 import { instPhotos } from '../mocks/cardsData';
 import { DetailedDescription } from './DetailedDescription';
 import { LeaveCommentSection } from './LeaveCommentSection';
-import { NavbarPanel } from './NavbarPanel';
-export function GoodPageFull() {
+import { Auth } from './Auth/Auth';
+
+export function GoodPageFull({ authTableState, setAuthTableState }) {
   const [bigImage, setBigImage] = useState(mainImg);
   const [descriptionIsOn, setDescriptionIsOn] = useState(true);
 
@@ -28,6 +29,7 @@ export function GoodPageFull() {
   return (
     <>
       <div className='containerGoodPageFull'>
+        {authTableState && <Auth setAuthTableState={setAuthTableState} />}
         <div className='photosWithDescription'>
           <div className='imagesSection'>
             <div className='bigImage'>

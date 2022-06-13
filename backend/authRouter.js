@@ -2,10 +2,8 @@ const Router = require('express');
 const router = new Router();
 const controller = require('./authController');
 const { check } = require('express-validator');
-const cors = require('cors');
 const authMiddleware = require('./authMiddlware');
 const roleMiddleware = require('./roleMiddleware');
-const tokenCheckerMiddlware = require('./tokenCheckerMiddlware');
 
 router.post(
   '/registration',
@@ -20,7 +18,7 @@ router.post(
 );
 router.post('/login', controller.login);
 router.get('/users', authMiddleware, roleMiddleware(['ADMIN']), controller.getUsers);
-router.post('/currentuser', authMiddleware, roleMiddleware(['ADMIN']), controller.getCurrentUser);
+router.post('/currentuser', authMiddleware, controller.getCurrentUser);
 router.post('/getaccesstoken', controller.getAccessToken);
 
 module.exports = router;

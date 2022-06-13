@@ -1,4 +1,4 @@
-import { put, call, takeLatest, takeLeading, delay } from 'redux-saga/effects';
+import { put, call, takeLatest, takeEvery, takeLeading, delay } from 'redux-saga/effects';
 import { signUpRequest } from '../../services/signUpRequest';
 import { SIGN_UP_STATE } from './SignUpAT';
 import { isSignedUpStateChange } from './SignUpAC';

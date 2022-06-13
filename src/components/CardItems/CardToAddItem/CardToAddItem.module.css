@@ -1,0 +1,12 @@
+.card {
+  width: 230px;
+  height: 250px;
+  background-color: #f7f7f7;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.card .link {
+  background-color: #f7f7f7;
+}
+/*# sourceMappingURL=CardToAddItem.module.css.map */

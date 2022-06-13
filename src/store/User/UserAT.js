@@ -1,7 +1,8 @@
 export const CHANGE_ISVERIFIED_STATE = 'CHANGE_ISVERIFIED_STATE';
-export const CHANGE_ISADMIN_STATE = 'CHANGE_ISADMIN_STATE';
+export const CHANGE_ROLE_STATE = 'CHANGE_ROLE_STATE';
 export const LOGIN = 'LOGIN';
 export const SET_ISLOGGED = 'SET_ISLOGGED';
+export const SET_ID = 'SET_ID';
 export const SET_NAME = 'SET_NAME';
 export const SET_EMAIL = 'SET_EMAIL';
 export const SET_PHONE = 'SET_PHONE';

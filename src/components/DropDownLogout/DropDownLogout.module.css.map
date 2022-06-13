@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,eAAe,CAAC;EACd,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,MAAM;EACtB,QAAQ,EAAE,QAAQ;EAClB,UAAU,EAAE,KAAK;EACjB,SAAS,EAAE,KAAK;EAChB,QAAQ,EAAE,MAAM;EAChB,UAAU,EAAE,IAAI;EAChB,WAAW,EAAE,IAAI;EACjB,gBAAgB,EAAE,IAAI;EAEtB,OAAO,EAAE,CAAC;CAOX;;AAlBD,AAYE,eAZa,CAYb,CAAC,CAAC;EACA,cAAc,EAAE,MAAM;EACtB,UAAU,EAAE,MAAM;EAClB,eAAe,EAAE,IAAI;EACrB,KAAK,EAAE,KAAY;CACpB",
+    "sources": [
+        "DropDownLogout.module.scss"
+    ],
+    "names": [],
+    "file": "DropDownLogout.module.css"
+}

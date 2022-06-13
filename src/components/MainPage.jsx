@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { MainPageImage } from './ImageMainPage';
-import { DropDownPanel } from './DropDownPanel';
-import { MainContent } from './MainContent/MainContent';
-import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
 
 import { Auth } from './Auth/Auth';
 
@@ -12,11 +9,10 @@ export let dropDownShown = false;
 
 const DropDownContext = React.createContext(dropDownShown);
 
-export function MainPage() {
-  const authTableState = useSelector((state) => state.AuthWindowStateReducer.isVisible);
+export function MainPage({ authTableState, setAuthTableState }) {
   return (
     <>
-      {authTableState && <Auth />}
+      {authTableState && <Auth setAuthTableState={setAuthTableState} />}
       <MainPageImage />
     </>
   );

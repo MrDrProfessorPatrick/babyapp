@@ -1,11 +1,19 @@
-import { put, call, takeLatest } from 'redux-saga/effects';
+import { put, call, takeLatest, takeEvery } from 'redux-saga/effects';
 import { LOGIN_URL } from '../../constants/Links';
 import { GET_USER_DETAILS_REQUEST, LOGIN } from './UserAT';
-import { addAccessToken, SetNameAC, SetEmailAC, SetPhoneAC } from './UserAC';
+import {
+  addAccessToken,
+  SetNameAC,
+  SetEmailAC,
+  SetPhoneAC,
+  SetUserIdAC,
+  setRoleStateAC,
+} from './UserAC';
 import { loginRequest } from '../../services/loginRequest';
 import { fetchUserDetails } from '../../services/fetchUserDetails';
 
 export function* loginWorker(payload) {
+  console.log('loginWorker');
   try {
     console.log('Inside loginWorker ', payload, payload.payload.username, payload.payload.password);
     const token = yield call(loginRequest, [
@@ -13,23 +21,23 @@ export function* loginWorker(payload) {
       payload.payload.username,
       payload.payload.password,
     ]);
-    yield console.log('token.accessToken', token);
-    yield console.log('token in loginWorker', token);
+
     yield put(addAccessToken(token.accessToken));
-    yield put(SetNameAC(payload.payload.username));
-    // yield call(isAdminChangeStateAC(payload.isAdmin));
   } catch (error) {
     console.log('error in loginWorker', error);
   }
 }
 
 export function* getUserDetailsWorker(payload) {
-  yield console.log(payload.payload, 'payload in getUserDetailsWorker');
+  if (!payload.payload) return;
   const userDetails = yield call(fetchUserDetails, [payload.payload]);
   yield put(SetNameAC(userDetails.username));
+  userDetails._id ? yield put(SetUserIdAC(userDetails._id)) : yield put(SetUserIdAC('No id'));
   userDetails.email ? yield put(SetEmailAC(userDetails.email)) : yield put(SetEmailAC('No email'));
   userDetails.phone ? yield put(SetPhoneAC(userDetails.phone)) : yield put(SetPhoneAC('No phone'));
-  yield console.log('userDetails', userDetails);
+  userDetails.roles
+    ? yield put(setRoleStateAC(userDetails.roles[0]))
+    : yield put(setRoleStateAC(''));
 }
 
 export function* loginWatcher() {

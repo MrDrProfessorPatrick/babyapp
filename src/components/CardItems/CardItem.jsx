@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import img from '../assets/placeholderPhoto.PNG';
+import classes from './CardItem.module.scss';
+import img from '../../assets/placeholderPhoto.PNG';
 
 export function CardItem() {
   const [isShownDescription, setIsShownDescription] = useState(false);
@@ -16,20 +17,24 @@ export function CardItem() {
   }
 
   return (
-    <Card onMouseEnter={showDescription} onMouseLeave={(e) => hideDescription(e)}>
+    <Card
+      onMouseEnter={showDescription}
+      onMouseLeave={(e) => hideDescription(e)}
+      className={classes.card}
+    >
       <Link to='/good'>
-        <Card.Img className='cardImg' variant='top' src={img} />
+        <Card.Img className={classes.cardImg} variant='top' src={img} />
       </Link>
-      <Card.Body>
+      <Card.Body className={classes.cardBody}>
         <Card.Title>Название товара и краткое описание товара</Card.Title>
-        <div className='button-price'>
-          <div className='price'>9.99 грн</div>
-          <Button variant='outline-success' className='buyBtn'>
+        <div className={classes.buttonPrice}>
+          <div className={classes.price}>9.99 грн</div>
+          <Button variant='outline-success' className={classes.buyBtn}>
             Купить
           </Button>
         </div>
         {isShownDescription && (
-          <div className='shortDescription'>
+          <div className={classes.shortDescription}>
             <Card.Text>
               Some quick example text to build on the card title and make up the bulk of the card's
               content. Some quick example text to build on the card title and make up the bulk of

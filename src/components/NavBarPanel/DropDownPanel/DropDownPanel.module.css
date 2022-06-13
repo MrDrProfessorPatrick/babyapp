@@ -1,0 +1,51 @@
+.dropdown {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: absolute;
+  background-color: #f7c9db;
+  width: 15vw;
+  height: 80vh;
+  left: 0px;
+  padding: 10px;
+  z-index: 2;
+}
+
+.dropdown .dropdown-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: inherit;
+  z-index: 2;
+  height: 40px;
+  line-height: 40px;
+  width: auto;
+  background-color: #f7c9db;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.dropdown .dropdown-item:hover {
+  background-color: #faf3f6;
+  color: red;
+}
+
+.linkWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+/*# sourceMappingURL=DropDownPanel.module.css.map */

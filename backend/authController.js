@@ -23,7 +23,7 @@ class authController {
       }
 
       const { username, password, email } = req.body;
-      const candidate = await User.findOne({ username });
+      const candidate = await User.findOne({ username }); // TODO check if it finds username right
       // emailSender(email, username, password, 'First email', 'Body of email');
       // TODO; // Doesn't work
 
@@ -44,11 +44,11 @@ class authController {
 
   async login(req, res) {
     try {
-      console.log('req.body', req.body);
       const { username, password } = req.body;
       const user = await User.findOne({ username });
-      const userId = user.id;
-      console.log(user, 'user inside login authController');
+      const userId = user._id;
+      const oldTokens = await AccessToken.findOne({ userId });
+      if (oldTokens) oldTokens.remove();
       if (!user) {
         return res.status(400).json({ message: `Пользователь ${username} не найден` });
       }
@@ -56,11 +56,12 @@ class authController {
       if (!validPassword) {
         return res.status(400).json({ message: 'Неверный пароль' });
       }
+
       const accessToken = genereteToken(user._id, user.roles, secret);
       const refreshToken = genereteToken(user._id, user.roles, refreshTokenSecret);
-      const AccessTokenById = new AccessToken({ userId, accessToken, refreshToken });
+      const AccessTokenById = await new AccessToken({ userId, accessToken, refreshToken });
       AccessTokenById.save();
-      // console.log('Tokens in login', res.json({ token, refreshToken }));
+
       return res.status(200).json({ userId, accessToken, refreshToken });
     } catch (error) {
       console.log(error);
@@ -69,25 +70,32 @@ class authController {
   }
 
   async getAccessToken(req, res) {
-    const refreshToken = req.cookies.refreshToken.split(' ')[0];
     let accessToken;
-    console.log(refreshToken, 'refreshToken');
-    if (!refreshToken) {
-      return res.status(403).json({ error: true, message: 'You need to login' });
-    }
+    try {
+      const refreshToken = req.cookies.refreshToken.split(' ')[0];
 
-    jwt.verify(refreshToken, refreshTokenSecret, function (err, decoded) {
-      if (err) {
-        console.log(err, 'err');
-        return res.status(403).json({ error: true, message: 'You need to login token is invalid' });
+      if (!refreshToken) {
+        return res.status(403).json({ error: true, message: 'You need to login' });
       }
-      console.log('decoded inside getAccessToken', decoded);
 
-      accessToken = genereteToken(decoded.id, decoded.roles, secret);
-      res.accessToken = accessToken;
-    });
-    console.log('request Cookies', req.cookies.refreshToken);
-    console.log('getAccessToken req and DOCUMENT COOKIE');
+      jwt.verify(refreshToken, refreshTokenSecret, async function (err, decoded) {
+        if (err) {
+          console.log(err, 'err');
+          return res
+            .status(403)
+            .json({ error: true, message: 'You need to login token is invalid' });
+        }
+        // const id = decoded.id;
+
+        // const oldRefreshToken = await AccessToken.findOne({ id });
+        // if (oldRefreshToken !== refreshToken) throw new Error('Access dinied');
+
+        accessToken = genereteToken(decoded.id, decoded.roles, secret);
+        res.accessToken = accessToken;
+      });
+    } catch (error) {
+      console.log(error, 'error in getAccess token');
+    }
 
     return res.status(200).json(accessToken);
   }
@@ -101,9 +109,7 @@ class authController {
 
   async getUsers(req, res) {
     try {
-      console.log('req inside getUsers', req);
       const users = await User.find();
-      console.log('decoded User Data', req.decodedUserData);
       res.json({ users });
     } catch (error) {
       console.log(error);
@@ -112,9 +118,9 @@ class authController {
 
   async getCurrentUser(req, res) {
     try {
-      await console.log('req.decodedUserData', req.decodedUserData.id);
+      await console.log(req.decodedUserData, 'req.decodedUserData');
       const user = await User.findById(req.decodedUserData.id);
-      await console.log(user, 'user in getCurrentUser');
+
       return res.status(200).json(user);
     } catch (error) {
       console.log('error inside getCurrentUser', error);

@@ -1,0 +1,42 @@
+.card {
+  width: 230px;
+  height: 250px;
+  background-color: rgb(247, 247, 247);
+
+  .cardImg {
+    width: 230px;
+    height: 200px;
+    padding: 15px 10px 10px 10px;
+    box-sizing: border-box;
+  }
+
+  .cardBody {
+    width: inherit;
+    padding: 10px;
+    background-color: rgb(247, 247, 247);
+    box-sizing: border-box;
+    .buttonPrice {
+      display: flex;
+      justify-content: space-around;
+
+      .buyBtn {
+        width: 80px;
+        height: 30px;
+        border-radius: 3px;
+      }
+
+      .price {
+        margin-top: 5px;
+      }
+    }
+    .shortDescription {
+      position: relative;
+      width: inherit;
+      left: -10px;
+      padding: 0px 10px 3px 10px;
+      background-color: rgb(247, 247, 247);
+      box-sizing: border-box;
+      z-index: 3;
+    }
+  }
+}
