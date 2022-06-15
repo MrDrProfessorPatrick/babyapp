@@ -1,4 +1,5 @@
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import { SignUpReducer } from './SignUp/SignUpReducer';
 import { UserReducer } from './User/UserReducer';

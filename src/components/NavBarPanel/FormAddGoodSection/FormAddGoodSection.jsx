@@ -6,9 +6,7 @@ import classes from './FormAddGoodSection.module.scss';
 
 export function FormAddGoodSection({ showGoodAddFrom }) {
   const sectionNameRef = useRef();
-  const goodsList = useSelector((state) =>
-    state.GoodsReducer.categoriesList.length ? state.GoodsReducer.categoriesList[0].categories : []
-  );
+  const goodsList = useSelector((state) => state.GoodsReducer.categoriesList);
   console.log(goodsList, 'goodsList');
 
   async function handleSubmit(e) {

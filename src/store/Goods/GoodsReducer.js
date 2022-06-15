@@ -1,4 +1,4 @@
-import { SET_CATEGORIES_LIST, GET_CATEGORIES_LIST } from './GoodsAT';
+import { SET_CATEGORIES_LIST, GET_CATEGORIES_LIST, LOAD_CATEGORIES_LIST } from './GoodsAT';
 const initialState = {
   categoriesList: [],
 };
@@ -6,6 +6,8 @@ const initialState = {
 export const GoodsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_CATEGORIES_LIST:
+      return state;
+    case LOAD_CATEGORIES_LIST:
       return state;
     case SET_CATEGORIES_LIST:
       return {

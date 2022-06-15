@@ -5,7 +5,6 @@ import { logoutRequest } from '../../services/logoutRequest';
 import classes from './DropDownLogout.module.scss';
 
 export function DropDownLogout({ showDropDownLogout, hideDropDownLogout, isHoverLogout }) {
-  console.log(isHoverLogout, 'isHoverLogout');
   if (isHoverLogout) {
     return (
       <div

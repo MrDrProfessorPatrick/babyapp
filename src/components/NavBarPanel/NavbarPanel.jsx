@@ -14,10 +14,7 @@ export function NavbarPanel({ setAuthTableState }) {
   const [isHoverLogout, setIsHoverLogout] = useState(false);
   const [isGoodAddFormShown, setGoodAddFormShown] = useState(false);
   const { acessToken, name } = useSelector((state) => state.UserReducer);
-  const goodsList = useSelector((state) =>
-    state.GoodsReducer.categoriesList.length ? state.GoodsReducer.categoriesList[0].categories : []
-  );
-  console.log(goodsList, 'Navbar goodsList');
+
   const dispatch = useDispatch();
 
   function showGoodAddForm() {
@@ -117,7 +114,6 @@ export function NavbarPanel({ setAuthTableState }) {
         hideDropDownMenu={hideDropDownMenu}
         showGoodAddForm={showGoodAddForm}
         isHoverCatalog={isHoverCatalog}
-        goodsList={goodsList}
       />
       <DropDownLogout
         showDropDownLogout={showDropDownLogout}
