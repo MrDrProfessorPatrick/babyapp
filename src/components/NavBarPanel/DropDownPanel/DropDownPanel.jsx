@@ -17,10 +17,8 @@ export function DropDownPanel({
 }) {
   const dispatch = useDispatch();
   const Role = useSelector((state) => state.UserReducer.Role);
-  // const goodsList = [];
-  let goodsList = useSelector((state) => state.GoodsReducer.categoriesList);
 
-  console.log(goodsList, 'goodsList');
+  let goodsList = useSelector((state) => state.GoodsReducer.categoriesList);
 
   async function handleDeleteSection(e) {
     const filteredList = goodsList.filter((category) => {
@@ -33,20 +31,35 @@ export function DropDownPanel({
 
   async function handleOnDragEnd(e) {
     const destination = e.destination.index;
-    const source = e.source.index;
+    let source = e.source.index;
+    let newOrderArr = [];
 
-    const newOrder = goodsList
-      ? goodsList.map((good) => {
-          return good;
-        })
-      : [];
+    if (destination < source) {
+      for (let i = 0; i < goodsList.length; i++) {
+        if (destination === i) {
+          newOrderArr.push(goodsList[source]);
+        }
+        if (source === i) {
+          continue;
+        }
+        newOrderArr.push(goodsList[i]);
+      }
+    }
 
-    newOrder[destination] = goodsList[source];
-    newOrder[source] = goodsList[destination];
-
-    console.log(newOrder, 'new Order');
-
-    await dispatch(loadCategoriesListAC(newOrder));
+    if (destination > source) {
+      for (let i = 0; i < goodsList.length; i++) {
+        if (source === i) {
+          continue;
+        }
+        if (destination === i) {
+          newOrderArr.push(goodsList[i]);
+          newOrderArr.push(goodsList[source]);
+          continue;
+        }
+        newOrderArr.push(goodsList[i]);
+      }
+    }
+    await dispatch(loadCategoriesListAC(newOrderArr));
   }
 
   if (isHoverCatalog) {
@@ -73,7 +86,7 @@ export function DropDownPanel({
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
                       >
-                        <Nav.Link as={Link} key={category} to='/goods'>
+                        <Nav.Link as={Link} key={category} to={`/${category}`}>
                           {category}
                         </Nav.Link>
                         <CloseButton

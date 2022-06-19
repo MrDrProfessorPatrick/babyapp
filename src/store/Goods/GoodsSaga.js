@@ -4,9 +4,9 @@ import { GET_CATEGORIES_LIST, LOAD_CATEGORIES_LIST } from './GoodsAT';
 import { fetchGoodsList } from '../../services/fetchGoodsList';
 import { setSectionNameList } from '../../services/setSectionName';
 
-export function* getGoodsListWorker(payload) {
+export function* getGoodsListWorker({ payload }) {
   try {
-    yield console.log('getGoodsWorker works');
+    yield console.log('getGoodsWorker works', payload);
     const goodsList = yield call(fetchGoodsList);
     console.log(goodsList.data[0].categories, 'goodsList in getGoodsListWorker');
     yield put(setCategoriesListAC(goodsList.data[0].categories));
